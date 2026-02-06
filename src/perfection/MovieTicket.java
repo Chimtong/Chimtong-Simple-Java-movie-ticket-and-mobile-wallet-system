@@ -1,13 +1,21 @@
 package perfection;
 
 import java.util.Scanner;
-
-import static perfection.MobileWallet.prices;
-
 public class MovieTicket {
+ Movie movie;
 
-    static String[] movies={"Avengers","Lion King","Spider-Man"};
-    static double[] tPrice = {700,500,600};
+ MovieTicket(Movie movie){
+     this.movie=movie;
+ }
+ void printTicket(){
+     System.out.println("Movie: " + movie.name);
+     System.out.println("Price: KES " + movie.price);
+ }
+    static Movie[] movies={
+         new Movie("Avengers",700),
+         new Movie("Lion King",500),
+         new Movie("Spider-Man",600)
+ };
     static double balance = 2000;
 
     static Scanner input = new Scanner(System.in);
@@ -36,9 +44,10 @@ public class MovieTicket {
     static void viewMovies() {
         System.out.println("MOVIE MENU");
         for(int i = 0; i < movies.length; i++){
-            System.out.println((i+1)+". " + movies[i] + "- KES " + tPrice[i]);
+            movies[i].printMovie(i);
         }
     }
+
     static void bookTicket(){
         viewMovies();
         System.out.println("Select the movie you'd like to watch (1-3): ");
@@ -55,12 +64,12 @@ public class MovieTicket {
             return;
         }
         
-        double totalCost = tPrice[choice-1] * quantity ;
+        double totalCost = movies[choice-1].price * quantity ;
         if(totalCost>balance){
             System.out.println("insufficient funds");
             return;
         }
-        System.out.println("you booked " + quantity +" tickets of " + movies[choice-1]);
+        System.out.println("you booked " + quantity +" tickets of " + movies[choice-1].name);
         System.out.println("Total cost: KES "+ totalCost );
         balance-=totalCost;
     }
